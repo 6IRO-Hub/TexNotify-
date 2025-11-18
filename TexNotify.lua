@@ -18,8 +18,8 @@ function TexNotify:Show(config)
     
     local mainFrame = Instance.new("Frame")
     mainFrame.Name = "NotificationFrame"
-    mainFrame.Size = UDim2.new(0, 450, 0, 0)
-    mainFrame.Position = UDim2.new(1, -470, 0, 30)
+    mainFrame.Size = UDim2.new(0, 350, 0, 0)
+    mainFrame.Position = UDim2.new(1, -370, 0, 30)
     mainFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 25)
     mainFrame.BorderSizePixel = 0
     mainFrame.ClipsDescendants = true
@@ -61,15 +61,6 @@ function TexNotify:Show(config)
     topGlowCorner.CornerRadius = UDim.new(0, 18)
     topGlowCorner.Parent = topGlow
     
-    local topGlowGradient = Instance.new("UIGradient")
-    topGlowGradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(150, 160, 255)),
-        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(88, 101, 242)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(150, 160, 255))
-    }
-    topGlowGradient.Rotation = 0
-    topGlowGradient.Parent = topGlow
-    
     local bgGradient = Instance.new("UIGradient")
     bgGradient.Color = ColorSequence.new{
         ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 35)),
@@ -79,44 +70,6 @@ function TexNotify:Show(config)
     bgGradient.Rotation = 135
     bgGradient.Parent = mainFrame
     
-    local particleContainer = Instance.new("Frame")
-    particleContainer.Size = UDim2.new(1, 0, 1, 0)
-    particleContainer.BackgroundTransparency = 1
-    particleContainer.ClipsDescendants = true
-    particleContainer.ZIndex = 1
-    particleContainer.Parent = mainFrame
-    
-    for i = 1, 8 do
-        local particle = Instance.new("Frame")
-        particle.Size = UDim2.new(0, math.random(2, 4), 0, math.random(2, 4))
-        particle.Position = UDim2.new(math.random(0, 100) / 100, 0, math.random(0, 100) / 100, 0)
-        particle.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
-        particle.BackgroundTransparency = 0.7
-        particle.BorderSizePixel = 0
-        particle.Parent = particleContainer
-        
-        local particleCorner = Instance.new("UICorner")
-        particleCorner.CornerRadius = UDim.new(1, 0)
-        particleCorner.Parent = particle
-        
-        spawn(function()
-            while particle and particle.Parent do
-                local randomX = math.random(-20, 20) / 100
-                local randomY = math.random(-20, 20) / 100
-                local currentX = particle.Position.X.Scale
-                local currentY = particle.Position.Y.Scale
-                local newX = math.clamp(currentX + randomX, 0, 1)
-                local newY = math.clamp(currentY + randomY, 0, 1)
-                
-                TweenService:Create(particle, TweenInfo.new(math.random(2, 4), Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
-                    Position = UDim2.new(newX, 0, newY, 0),
-                    BackgroundTransparency = math.random(5, 9) / 10
-                }):Play()
-                wait(math.random(2, 4))
-            end
-        end)
-    end
-    
     local contentFrame = Instance.new("Frame")
     contentFrame.Size = UDim2.new(1, -44, 1, -44)
     contentFrame.Position = UDim2.new(0, 22, 0, 22)
@@ -125,7 +78,7 @@ function TexNotify:Show(config)
     contentFrame.Parent = mainFrame
     
     local iconContainer = Instance.new("Frame")
-    iconContainer.Size = UDim2.new(0, 56, 0, 56)
+    iconContainer.Size = UDim2.new(0, 46, 0, 46)
     iconContainer.Position = UDim2.new(0, 0, 0, 0)
     iconContainer.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
     iconContainer.BorderSizePixel = 0
@@ -133,7 +86,7 @@ function TexNotify:Show(config)
     iconContainer.Parent = contentFrame
     
     local iconCorner = Instance.new("UICorner")
-    iconCorner.CornerRadius = UDim.new(0, 14)
+    iconCorner.CornerRadius = UDim.new(0, 12)
     iconCorner.Parent = iconContainer
     
     local iconGradient = Instance.new("UIGradient")
@@ -162,27 +115,27 @@ function TexNotify:Show(config)
         iconImage.Parent = iconContainer
         
         local imageCorner = Instance.new("UICorner")
-        imageCorner.CornerRadius = UDim.new(0, 12)
+        imageCorner.CornerRadius = UDim.new(0, 10)
         imageCorner.Parent = iconImage
     else
         local iconLabel = Instance.new("TextLabel")
         iconLabel.Size = UDim2.new(1, 0, 1, 0)
         iconLabel.BackgroundTransparency = 1
-        iconLabel.Text = "I"
+        iconLabel.Text = "!"
         iconLabel.Font = Enum.Font.GothamBold
-        iconLabel.TextSize = 32
+        iconLabel.TextSize = 28
         iconLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
         iconLabel.ZIndex = 3
         iconLabel.Parent = iconContainer
     end
     
     local titleLabel = Instance.new("TextLabel")
-    titleLabel.Size = UDim2.new(1, -76, 0, 26)
-    titleLabel.Position = UDim2.new(0, 68, 0, 0)
+    titleLabel.Size = UDim2.new(1, -60, 0, 22)
+    titleLabel.Position = UDim2.new(0, 56, 0, 0)
     titleLabel.BackgroundTransparency = 1
     titleLabel.Text = config.Name or "Notification"
     titleLabel.Font = Enum.Font.GothamBold
-    titleLabel.TextSize = 19
+    titleLabel.TextSize = 16
     titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
     titleLabel.TextXAlignment = Enum.TextXAlignment.Left
     titleLabel.TextYAlignment = Enum.TextYAlignment.Top
@@ -190,12 +143,12 @@ function TexNotify:Show(config)
     titleLabel.Parent = contentFrame
     
     local descLabel = Instance.new("TextLabel")
-    descLabel.Size = UDim2.new(1, -76, 0, 44)
-    descLabel.Position = UDim2.new(0, 68, 0, 30)
+    descLabel.Size = UDim2.new(1, -60, 0, 36)
+    descLabel.Position = UDim2.new(0, 56, 0, 26)
     descLabel.BackgroundTransparency = 1
     descLabel.Text = config.Description or "Description"
     descLabel.Font = Enum.Font.Gotham
-    descLabel.TextSize = 15
+    descLabel.TextSize = 13
     descLabel.TextColor3 = Color3.fromRGB(205, 205, 220)
     descLabel.TextXAlignment = Enum.TextXAlignment.Left
     descLabel.TextYAlignment = Enum.TextYAlignment.Top
@@ -205,7 +158,7 @@ function TexNotify:Show(config)
     
     local separatorLine = Instance.new("Frame")
     separatorLine.Size = UDim2.new(1, 0, 0, 1)
-    separatorLine.Position = UDim2.new(0, 0, 1, -52)
+    separatorLine.Position = UDim2.new(0, 0, 1, -44)
     separatorLine.BackgroundColor3 = Color3.fromRGB(50, 50, 65)
     separatorLine.BackgroundTransparency = 0.5
     separatorLine.BorderSizePixel = 0
@@ -213,8 +166,8 @@ function TexNotify:Show(config)
     separatorLine.Parent = contentFrame
     
     local buttonFrame = Instance.new("Frame")
-    buttonFrame.Size = UDim2.new(1, 0, 0, 40)
-    buttonFrame.Position = UDim2.new(0, 0, 1, -48)
+    buttonFrame.Size = UDim2.new(1, 0, 0, 36)
+    buttonFrame.Position = UDim2.new(0, 0, 1, -40)
     buttonFrame.BackgroundTransparency = 1
     buttonFrame.ZIndex = 2
     buttonFrame.Parent = contentFrame
@@ -226,14 +179,14 @@ function TexNotify:Show(config)
     button1.BorderSizePixel = 0
     button1.Text = config.Button1 or "OK"
     button1.Font = Enum.Font.GothamBold
-    button1.TextSize = 15
+    button1.TextSize = 14
     button1.TextColor3 = Color3.fromRGB(255, 255, 255)
     button1.AutoButtonColor = false
     button1.ZIndex = 2
     button1.Parent = buttonFrame
     
     local button1Corner = Instance.new("UICorner")
-    button1Corner.CornerRadius = UDim.new(0, 11)
+    button1Corner.CornerRadius = UDim.new(0, 10)
     button1Corner.Parent = button1
     
     local button1Gradient = Instance.new("UIGradient")
@@ -258,14 +211,14 @@ function TexNotify:Show(config)
     button2.BorderSizePixel = 0
     button2.Text = config.Button2 or "Cancel"
     button2.Font = Enum.Font.GothamBold
-    button2.TextSize = 15
+    button2.TextSize = 14
     button2.TextColor3 = Color3.fromRGB(225, 225, 235)
     button2.AutoButtonColor = false
     button2.ZIndex = 2
     button2.Parent = buttonFrame
     
     local button2Corner = Instance.new("UICorner")
-    button2Corner.CornerRadius = UDim.new(0, 11)
+    button2Corner.CornerRadius = UDim.new(0, 10)
     button2Corner.Parent = button2
     
     local button2Stroke = Instance.new("UIStroke")
@@ -279,8 +232,7 @@ function TexNotify:Show(config)
         if not mainFrame or not mainFrame.Parent then return end
         
         local closeTween = TweenService:Create(mainFrame, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
-            Size = UDim2.new(0, 450, 0, 0),
-            Position = UDim2.new(1, -470, 0, 30)
+            Position = UDim2.new(1, 50, 0, 30)
         })
         closeTween:Play()
         TweenService:Create(mainFrame, TweenInfo.new(0.25), {BackgroundTransparency = 1}):Play()
@@ -340,45 +292,63 @@ function TexNotify:Show(config)
         TweenService:Create(button2Stroke, TweenInfo.new(0.2), {Transparency = 0.4}):Play()
     end)
     
-    spawn(function()
-        while mainFrame and mainFrame.Parent do
-            for i = 0, 1, 0.008 do
-                if not mainFrame or not mainFrame.Parent then break end
-                topGlowGradient.Offset = Vector2.new(i * 2.5, 0)
-                wait(0.025)
-            end
-        end
-    end)
-    
-    spawn(function()
-        while iconContainer and iconContainer.Parent do
-            TweenService:Create(iconContainer, TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
-                Rotation = 5
-            }):Play()
-            wait(2)
-            if not iconContainer or not iconContainer.Parent then break end
-            TweenService:Create(iconContainer, TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
-                Rotation = -5
-            }):Play()
-            wait(2)
-        end
-    end)
-    
     local openTween = TweenService:Create(mainFrame, TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-        Size = UDim2.new(0, 450, 0, 175)
+        Size = UDim2.new(0, 350, 0, 140)
     })
     openTween:Play()
     
-    TweenService:Create(iconContainer, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0.2), {
-        Size = UDim2.new(0, 56, 0, 56)
-    }):Play()
-    
-    spawn(function()
-        wait(tonumber(config.Duration) or 5)
+    task.spawn(function()
+        task.wait(tonumber(config.Duration) or 5)
         if mainFrame and mainFrame.Parent then
             closeNotification()
         end
     end)
 end
+
+TexNotify:Show({
+    Name = "Delta Execute",
+    Description = "Script has been executed successfully",
+    Button1 = "Continue",
+    Button2 = "Close",
+    Duration = 5,
+    Callback1 = function()
+        print("Delta Execute Started")
+    end,
+    Callback2 = function()
+        print("Delta Execute Closed")
+    end
+})
+
+task.wait(1)
+
+TexNotify:Show({
+    Name = "System Ready",
+    Description = "All features are now active and ready to use",
+    Button1 = "OK",
+    Button2 = "Settings",
+    Duration = 6,
+    Callback1 = function()
+        print("System Confirmed")
+    end,
+    Callback2 = function()
+        print("Opening Settings")
+    end
+})
+
+task.wait(1)
+
+TexNotify:Show({
+    Name = "Warning",
+    Description = "You have 3 attempts remaining before server ban",
+    Button1 = "Understood",
+    Button2 = "Ignore",
+    Duration = 8,
+    Callback1 = function()
+        print("Warning Acknowledged")
+    end,
+    Callback2 = function()
+        print("Warning Ignored")
+    end
+})
 
 return TexNotify
