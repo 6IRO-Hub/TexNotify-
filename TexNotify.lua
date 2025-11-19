@@ -1,178 +1,136 @@
-local TweenService = game:GetService("TweenService")
-local Players = game:GetService("Players")
-
 local TexNotify = {}
-TexNotify.__index = TexNotify
 
 function TexNotify:Show(config)
-    local Name = config.Name or "Notification"
-    local Description = config.Description or ""
-    local Duration = config.Duration or 5
-    local Button1 = config.Button1
-    local Button2 = config.Button2
-    local Image = config.Image
-    local Sound = config.Sound
-    
-    local ScreenGui = Instance.new("ScreenGui")
-    local MainFrame = Instance.new("Frame")
-    local UICorner = Instance.new("UICorner")
-    local UIStroke = Instance.new("UIStroke")
-    local TitleLabel = Instance.new("TextLabel")
-    local DescLabel = Instance.new("TextLabel")
-    local ImageLabel = Instance.new("ImageLabel")
-    local ImageCorner = Instance.new("UICorner")
-    local ButtonFrame = Instance.new("Frame")
-    local Button1Obj = Instance.new("TextButton")
-    local Button2Obj = Instance.new("TextButton")
-    local ProgressBar = Instance.new("Frame")
-    local ProgressFill = Instance.new("Frame")
-    
-    ScreenGui.Name = "TexNotify"
-    ScreenGui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
-    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    ScreenGui.ResetOnSpawn = false
-    
-    MainFrame.Parent = ScreenGui
-    MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    MainFrame.BorderSizePixel = 0
-    MainFrame.Position = UDim2.new(-0.5, 0, 0.85, 0)
-    MainFrame.Size = UDim2.new(0, 280, 0, 90)
-    MainFrame.ClipsDescendants = false
-    
-    UICorner.CornerRadius = UDim.new(0, 12)
-    UICorner.Parent = MainFrame
-    
-    UIStroke.Parent = MainFrame
-    UIStroke.Color = Color3.fromRGB(60, 60, 60)
-    UIStroke.Thickness = 1.5
-    UIStroke.Transparency = 0.3
-    
-    if Image then
-        ImageLabel.Parent = MainFrame
-        ImageLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-        ImageLabel.Position = UDim2.new(0.04, 0, 0.15, 0)
-        ImageLabel.Size = UDim2.new(0, 45, 0, 45)
-        ImageLabel.Image = "rbxassetid://" .. Image
-        ImageLabel.ScaleType = Enum.ScaleType.Fit
-        
-        ImageCorner.CornerRadius = UDim.new(0, 8)
-        ImageCorner.Parent = ImageLabel
-    end
-    
-    TitleLabel.Parent = MainFrame
-    TitleLabel.BackgroundTransparency = 1
-    TitleLabel.Position = UDim2.new(Image and 0.24 or 0.05, 0, 0.15, 0)
-    TitleLabel.Size = UDim2.new(0, 180, 0, 20)
-    TitleLabel.Font = Enum.Font.GothamBold
-    TitleLabel.Text = Name
-    TitleLabel.TextColor3 = Color3.fromRGB(220, 220, 220)
-    TitleLabel.TextSize = 15
-    TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
-    TitleLabel.TextWrapped = true
-    
-    DescLabel.Parent = MainFrame
-    DescLabel.BackgroundTransparency = 1
-    DescLabel.Position = UDim2.new(Image and 0.24 or 0.05, 0, 0.45, 0)
-    DescLabel.Size = UDim2.new(0, 180, 0, 30)
-    DescLabel.Font = Enum.Font.Gotham
-    DescLabel.Text = Description
-    DescLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
-    DescLabel.TextSize = 12
-    DescLabel.TextXAlignment = Enum.TextXAlignment.Left
-    DescLabel.TextWrapped = true
-    
-    ProgressBar.Parent = MainFrame
-    ProgressBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    ProgressBar.BorderSizePixel = 0
-    ProgressBar.Position = UDim2.new(0, 0, 0.96, 0)
-    ProgressBar.Size = UDim2.new(1, 0, 0.04, 0)
-    
-    local ProgressCorner = Instance.new("UICorner")
-    ProgressCorner.CornerRadius = UDim.new(0, 12)
-    ProgressCorner.Parent = ProgressBar
-    
-    ProgressFill.Parent = ProgressBar
-    ProgressFill.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
-    ProgressFill.BorderSizePixel = 0
-    ProgressFill.Size = UDim2.new(1, 0, 1, 0)
-    
-    local ProgressFillCorner = Instance.new("UICorner")
-    ProgressFillCorner.CornerRadius = UDim.new(0, 12)
-    ProgressFillCorner.Parent = ProgressFill
-    
-    if Button1 or Button2 then
-        ButtonFrame.Parent = MainFrame
-        ButtonFrame.BackgroundTransparency = 1
-        ButtonFrame.Position = UDim2.new(0.05, 0, 0.75, 0)
-        ButtonFrame.Size = UDim2.new(0.9, 0, 0.15, 0)
-        
-        if Button1 then
-            Button1Obj.Parent = ButtonFrame
-            Button1Obj.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-            Button1Obj.BorderSizePixel = 0
-            Button1Obj.Position = UDim2.new(0, 0, 0, 0)
-            Button1Obj.Size = UDim2.new(Button2 and 0.48 or 1, 0, 1, 0)
-            Button1Obj.Font = Enum.Font.GothamBold
-            Button1Obj.Text = Button1
-            Button1Obj.TextColor3 = Color3.fromRGB(200, 200, 200)
-            Button1Obj.TextSize = 12
-            
-            local UICorner1 = Instance.new("UICorner")
-            UICorner1.CornerRadius = UDim.new(0, 6)
-            UICorner1.Parent = Button1Obj
-            
-            Button1Obj.MouseButton1Click:Connect(function()
-                TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Position = UDim2.new(-0.5, 0, 0.85, 0)}):Play()
-                task.wait(0.5)
-                ScreenGui:Destroy()
-            end)
-        end
-        
-        if Button2 then
-            Button2Obj.Parent = ButtonFrame
-            Button2Obj.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-            Button2Obj.BorderSizePixel = 0
-            Button2Obj.Position = UDim2.new(0.52, 0, 0, 0)
-            Button2Obj.Size = UDim2.new(0.48, 0, 1, 0)
-            Button2Obj.Font = Enum.Font.GothamBold
-            Button2Obj.Text = Button2
-            Button2Obj.TextColor3 = Color3.fromRGB(200, 200, 200)
-            Button2Obj.TextSize = 12
-            
-            local UICorner2 = Instance.new("UICorner")
-            UICorner2.CornerRadius = UDim.new(0, 6)
-            UICorner2.Parent = Button2Obj
-            
-            Button2Obj.MouseButton1Click:Connect(function()
-                TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Position = UDim2.new(-0.5, 0, 0.85, 0)}):Play()
-                task.wait(0.5)
-                ScreenGui:Destroy()
-            end)
-        end
-    end
-    
-    if Sound then
-        local SoundObj = Instance.new("Sound")
-        SoundObj.SoundId = "rbxassetid://" .. Sound
-        SoundObj.Volume = 0.5
-        SoundObj.Parent = ScreenGui
-        SoundObj:Play()
-        
-        SoundObj.Ended:Connect(function()
-            SoundObj:Destroy()
-        end)
-    end
-    
-    TweenService:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2.new(0.02, 0, 0.85, 0)}):Play()
-    
-    TweenService:Create(ProgressFill, TweenInfo.new(Duration, Enum.EasingStyle.Linear), {Size = UDim2.new(0, 0, 1, 0)}):Play()
-    
-    task.spawn(function()
-        task.wait(Duration)
-        TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Position = UDim2.new(-0.5, 0, 0.85, 0)}):Play()
-        task.wait(0.5)
-        ScreenGui:Destroy()
-    end)
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local screenGui = Instance.new("ScreenGui")  
+screenGui.Name = "TexNotifyGui"  
+screenGui.ResetOnSpawn = false  
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling  
+screenGui.Parent = playerGui  
+
+local mainFrame = Instance.new("Frame")  
+mainFrame.Name = "NotificationFrame"  
+mainFrame.Size = UDim2.new(0, 380, 0, 0)  
+mainFrame.Position = UDim2.new(1, -400, 0, 20)  
+mainFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 24)  
+mainFrame.BorderSizePixel = 0  
+mainFrame.ClipsDescendants = true  
+mainFrame.AnchorPoint = Vector2.new(0, 0)  
+mainFrame.Parent = screenGui  
+
+local uiCorner = Instance.new("UICorner")  
+uiCorner.CornerRadius = UDim.new(0, 20)  
+uiCorner.Parent = mainFrame  
+
+local uiStroke = Instance.new("UIStroke")  
+uiStroke.Color = Color3.fromRGB(88, 101, 242)  
+uiStroke.Thickness = 2.5  
+uiStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border  
+uiStroke.Parent = mainFrame  
+
+local uiGradient = Instance.new("UIGradient")  
+uiGradient.Color = ColorSequence.new{  
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 35)),  
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(18, 18, 28)),  
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 22))  
+}  
+uiGradient.Rotation = 135  
+uiGradient.Parent = mainFrame  
+
+local shadow = Instance.new("Frame")  
+shadow.Size = UDim2.new(1, 0, 1, 0)  
+shadow.Position = UDim2.new(0, 0, 0, 0)  
+shadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  
+shadow.BackgroundTransparency = 0.6  
+shadow.ZIndex = 0  
+shadow.AnchorPoint = Vector2.new(0, 0)  
+shadow.Parent = mainFrame  
+local shadowCorner = Instance.new("UICorner")  
+shadowCorner.CornerRadius = UDim.new(0, 20)  
+shadowCorner.Parent = shadow  
+
+local contentFrame = Instance.new("Frame")  
+contentFrame.Size = UDim2.new(1, -32, 1, -32)  
+contentFrame.Position = UDim2.new(0, 16, 0, 16)  
+contentFrame.BackgroundTransparency = 1  
+contentFrame.Parent = mainFrame  
+
+local titleLabel = Instance.new("TextLabel")  
+titleLabel.Size = UDim2.new(1, -32, 0, 28)  
+titleLabel.Position = UDim2.new(0, 0, 0, 0)  
+titleLabel.BackgroundTransparency = 1  
+titleLabel.Text = config.Name or "اشعار"  
+titleLabel.Font = Enum.Font.GothamBold  
+titleLabel.TextSize = 19  
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)  
+titleLabel.TextXAlignment = Enum.TextXAlignment.Left  
+titleLabel.TextYAlignment = Enum.TextYAlignment.Top  
+titleLabel.Parent = contentFrame  
+
+local descLabel = Instance.new("TextLabel")  
+descLabel.Size = UDim2.new(1, -32, 0, 32)  
+descLabel.Position = UDim2.new(0, 0, 0, 30)  
+descLabel.BackgroundTransparency = 1  
+descLabel.Text = config.Description or "وصف الاشعار"  
+descLabel.Font = Enum.Font.Gotham  
+descLabel.TextSize = 15  
+descLabel.TextColor3 = Color3.fromRGB(220, 220, 230)  
+descLabel.TextXAlignment = Enum.TextXAlignment.Left  
+descLabel.TextYAlignment = Enum.TextYAlignment.Top  
+descLabel.TextWrapped = true  
+descLabel.Parent = contentFrame  
+
+local buttonFrame = Instance.new("Frame")  
+buttonFrame.Size = UDim2.new(1, 0, 0, 30)  
+buttonFrame.Position = UDim2.new(0, 0, 1, -40)  
+buttonFrame.BackgroundTransparency = 1  
+buttonFrame.Parent = contentFrame  
+
+local button1 = Instance.new("TextButton")  
+button1.Size = UDim2.new(0.48, 0, 1, 0)  
+button1.Position = UDim2.new(0, 0, 0, 0)  
+button1.BackgroundColor3 = Color3.fromRGB(88, 101, 242)  
+button1.BorderSizePixel = 0  
+button1.Text = config.Button1 or "موافق"  
+button1.Font = Enum.Font.GothamBold  
+button1.TextSize = 15  
+button1.TextColor3 = Color3.fromRGB(255, 255, 255)  
+button1.Parent = buttonFrame  
+
+local button2 = Instance.new("TextButton")  
+button2.Size = UDim2.new(0.48, 0, 1, 0)  
+button2.Position = UDim2.new(0.52, 0, 0, 0)  
+button2.BackgroundColor3 = Color3.fromRGB(138, 151, 255)  
+button2.BorderSizePixel = 0  
+button2.Text = config.Button2 or "إلغاء"  
+button2.Font = Enum.Font.GothamBold  
+button2.TextSize = 15  
+button2.TextColor3 = Color3.fromRGB(255, 255, 255)  
+button2.Parent = buttonFrame  
+
+local t = 0  
+local goalSize = UDim2.new(0, 380, 0, 120)  
+RunService.Heartbeat:Connect(function(delta)  
+    if mainFrame.Size.Y.Offset < goalSize.Y.Offset then  
+        mainFrame.Size = mainFrame.Size:Lerp(goalSize, 0.2)  
+    end  
+    t = t + delta  
+    uiStroke.Color = Color3.fromHSV((tick() % 5)/5, 1, 1)  
+end)  
+
+spawn(function()  
+    wait(config.Duration or 5)  
+    while mainFrame.Size.Y.Offset > 0 do  
+        mainFrame.Size = mainFrame.Size:Lerp(UDim2.new(0, 380, 0, 0), 0.2)  
+        wait()  
+    end  
+    screenGui:Destroy()  
+end)
+
 end
 
 return TexNotify
