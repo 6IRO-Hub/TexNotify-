@@ -16,7 +16,6 @@ function TexNotify:Show(config)
     local ScreenGui = Instance.new("ScreenGui")
     local MainFrame = Instance.new("Frame")
     local UICorner = Instance.new("UICorner")
-    local UIGradient = Instance.new("UIGradient")
     local UIStroke = Instance.new("UIStroke")
     local TitleLabel = Instance.new("TextLabel")
     local DescLabel = Instance.new("TextLabel")
@@ -25,7 +24,6 @@ function TexNotify:Show(config)
     local ButtonFrame = Instance.new("Frame")
     local Button1Obj = Instance.new("TextButton")
     local Button2Obj = Instance.new("TextButton")
-    local CloseButton = Instance.new("TextButton")
     local ProgressBar = Instance.new("Frame")
     local ProgressFill = Instance.new("Frame")
     
@@ -35,118 +33,96 @@ function TexNotify:Show(config)
     ScreenGui.ResetOnSpawn = false
     
     MainFrame.Parent = ScreenGui
-    MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
     MainFrame.BorderSizePixel = 0
-    MainFrame.Position = UDim2.new(1.5, 0, 0.02, 0)
-    MainFrame.Size = UDim2.new(0, 380, 0, 140)
-    MainFrame.ClipsDescendants = true
+    MainFrame.Position = UDim2.new(-0.5, 0, 0.85, 0)
+    MainFrame.Size = UDim2.new(0, 280, 0, 90)
+    MainFrame.ClipsDescendants = false
     
-    UICorner.CornerRadius = UDim.new(0, 15)
+    UICorner.CornerRadius = UDim.new(0, 12)
     UICorner.Parent = MainFrame
     
-    UIGradient.Parent = MainFrame
-    UIGradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 20, 30)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 10, 15))
-    }
-    UIGradient.Rotation = 45
-    
     UIStroke.Parent = MainFrame
-    UIStroke.Color = Color3.fromRGB(80, 80, 120)
-    UIStroke.Thickness = 2
-    UIStroke.Transparency = 0.5
-    
-    CloseButton.Parent = MainFrame
-    CloseButton.BackgroundTransparency = 1
-    CloseButton.Position = UDim2.new(0.92, 0, 0.03, 0)
-    CloseButton.Size = UDim2.new(0, 25, 0, 25)
-    CloseButton.Font = Enum.Font.GothamBold
-    CloseButton.Text = "X"
-    CloseButton.TextColor3 = Color3.fromRGB(255, 100, 100)
-    CloseButton.TextSize = 18
+    UIStroke.Color = Color3.fromRGB(60, 60, 60)
+    UIStroke.Thickness = 1.5
+    UIStroke.Transparency = 0.3
     
     if Image then
         ImageLabel.Parent = MainFrame
-        ImageLabel.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-        ImageLabel.Position = UDim2.new(0.03, 0, 0.15, 0)
-        ImageLabel.Size = UDim2.new(0, 60, 0, 60)
+        ImageLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+        ImageLabel.Position = UDim2.new(0.04, 0, 0.15, 0)
+        ImageLabel.Size = UDim2.new(0, 45, 0, 45)
         ImageLabel.Image = "rbxassetid://" .. Image
         ImageLabel.ScaleType = Enum.ScaleType.Fit
         
-        ImageCorner.CornerRadius = UDim.new(0, 10)
+        ImageCorner.CornerRadius = UDim.new(0, 8)
         ImageCorner.Parent = ImageLabel
     end
     
     TitleLabel.Parent = MainFrame
     TitleLabel.BackgroundTransparency = 1
-    TitleLabel.Position = UDim2.new(Image and 0.22 or 0.05, 0, 0.12, 0)
-    TitleLabel.Size = UDim2.new(0, 260, 0, 28)
+    TitleLabel.Position = UDim2.new(Image and 0.24 or 0.05, 0, 0.15, 0)
+    TitleLabel.Size = UDim2.new(0, 180, 0, 20)
     TitleLabel.Font = Enum.Font.GothamBold
     TitleLabel.Text = Name
-    TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    TitleLabel.TextSize = 20
+    TitleLabel.TextColor3 = Color3.fromRGB(220, 220, 220)
+    TitleLabel.TextSize = 15
     TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
     TitleLabel.TextWrapped = true
     
     DescLabel.Parent = MainFrame
     DescLabel.BackgroundTransparency = 1
-    DescLabel.Position = UDim2.new(Image and 0.22 or 0.05, 0, 0.38, 0)
-    DescLabel.Size = UDim2.new(0, 260, 0, 40)
+    DescLabel.Position = UDim2.new(Image and 0.24 or 0.05, 0, 0.45, 0)
+    DescLabel.Size = UDim2.new(0, 180, 0, 30)
     DescLabel.Font = Enum.Font.Gotham
     DescLabel.Text = Description
-    DescLabel.TextColor3 = Color3.fromRGB(180, 180, 200)
-    DescLabel.TextSize = 15
+    DescLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+    DescLabel.TextSize = 12
     DescLabel.TextXAlignment = Enum.TextXAlignment.Left
     DescLabel.TextWrapped = true
-    DescLabel.TextTransparency = 0.2
     
     ProgressBar.Parent = MainFrame
-    ProgressBar.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+    ProgressBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
     ProgressBar.BorderSizePixel = 0
-    ProgressBar.Position = UDim2.new(0, 0, 0.95, 0)
-    ProgressBar.Size = UDim2.new(1, 0, 0.05, 0)
+    ProgressBar.Position = UDim2.new(0, 0, 0.96, 0)
+    ProgressBar.Size = UDim2.new(1, 0, 0.04, 0)
+    
+    local ProgressCorner = Instance.new("UICorner")
+    ProgressCorner.CornerRadius = UDim.new(0, 12)
+    ProgressCorner.Parent = ProgressBar
     
     ProgressFill.Parent = ProgressBar
-    ProgressFill.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+    ProgressFill.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
     ProgressFill.BorderSizePixel = 0
     ProgressFill.Size = UDim2.new(1, 0, 1, 0)
     
-    local ProgressGradient = Instance.new("UIGradient")
-    ProgressGradient.Parent = ProgressFill
-    ProgressGradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(120, 170, 255)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(80, 130, 255))
-    }
+    local ProgressFillCorner = Instance.new("UICorner")
+    ProgressFillCorner.CornerRadius = UDim.new(0, 12)
+    ProgressFillCorner.Parent = ProgressFill
     
     if Button1 or Button2 then
         ButtonFrame.Parent = MainFrame
         ButtonFrame.BackgroundTransparency = 1
-        ButtonFrame.Position = UDim2.new(0.05, 0, 0.72, 0)
-        ButtonFrame.Size = UDim2.new(0.9, 0, 0.18, 0)
+        ButtonFrame.Position = UDim2.new(0.05, 0, 0.75, 0)
+        ButtonFrame.Size = UDim2.new(0.9, 0, 0.15, 0)
         
         if Button1 then
             Button1Obj.Parent = ButtonFrame
-            Button1Obj.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+            Button1Obj.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
             Button1Obj.BorderSizePixel = 0
             Button1Obj.Position = UDim2.new(0, 0, 0, 0)
             Button1Obj.Size = UDim2.new(Button2 and 0.48 or 1, 0, 1, 0)
             Button1Obj.Font = Enum.Font.GothamBold
             Button1Obj.Text = Button1
-            Button1Obj.TextColor3 = Color3.fromRGB(255, 255, 255)
-            Button1Obj.TextSize = 15
+            Button1Obj.TextColor3 = Color3.fromRGB(200, 200, 200)
+            Button1Obj.TextSize = 12
             
             local UICorner1 = Instance.new("UICorner")
-            UICorner1.CornerRadius = UDim.new(0, 8)
+            UICorner1.CornerRadius = UDim.new(0, 6)
             UICorner1.Parent = Button1Obj
             
-            local UIStroke1 = Instance.new("UIStroke")
-            UIStroke1.Parent = Button1Obj
-            UIStroke1.Color = Color3.fromRGB(100, 150, 255)
-            UIStroke1.Thickness = 1.5
-            UIStroke1.Transparency = 0.6
-            
             Button1Obj.MouseButton1Click:Connect(function()
-                TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Position = UDim2.new(1.5, 0, 0.02, 0)}):Play()
+                TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Position = UDim2.new(-0.5, 0, 0.85, 0)}):Play()
                 task.wait(0.5)
                 ScreenGui:Destroy()
             end)
@@ -154,38 +130,26 @@ function TexNotify:Show(config)
         
         if Button2 then
             Button2Obj.Parent = ButtonFrame
-            Button2Obj.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+            Button2Obj.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
             Button2Obj.BorderSizePixel = 0
             Button2Obj.Position = UDim2.new(0.52, 0, 0, 0)
             Button2Obj.Size = UDim2.new(0.48, 0, 1, 0)
             Button2Obj.Font = Enum.Font.GothamBold
             Button2Obj.Text = Button2
-            Button2Obj.TextColor3 = Color3.fromRGB(255, 255, 255)
-            Button2Obj.TextSize = 15
+            Button2Obj.TextColor3 = Color3.fromRGB(200, 200, 200)
+            Button2Obj.TextSize = 12
             
             local UICorner2 = Instance.new("UICorner")
-            UICorner2.CornerRadius = UDim.new(0, 8)
+            UICorner2.CornerRadius = UDim.new(0, 6)
             UICorner2.Parent = Button2Obj
             
-            local UIStroke2 = Instance.new("UIStroke")
-            UIStroke2.Parent = Button2Obj
-            UIStroke2.Color = Color3.fromRGB(100, 150, 255)
-            UIStroke2.Thickness = 1.5
-            UIStroke2.Transparency = 0.6
-            
             Button2Obj.MouseButton1Click:Connect(function()
-                TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Position = UDim2.new(1.5, 0, 0.02, 0)}):Play()
+                TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Position = UDim2.new(-0.5, 0, 0.85, 0)}):Play()
                 task.wait(0.5)
                 ScreenGui:Destroy()
             end)
         end
     end
-    
-    CloseButton.MouseButton1Click:Connect(function()
-        TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Position = UDim2.new(1.5, 0, 0.02, 0)}):Play()
-        task.wait(0.5)
-        ScreenGui:Destroy()
-    end)
     
     if Sound then
         local SoundObj = Instance.new("Sound")
@@ -199,14 +163,14 @@ function TexNotify:Show(config)
         end)
     end
     
-    TweenService:Create(MainFrame, TweenInfo.new(0.6, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2.new(0.68, 0, 0.02, 0)}):Play()
+    TweenService:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = UDim2.new(0.02, 0, 0.85, 0)}):Play()
     
     TweenService:Create(ProgressFill, TweenInfo.new(Duration, Enum.EasingStyle.Linear), {Size = UDim2.new(0, 0, 1, 0)}):Play()
     
     task.spawn(function()
         task.wait(Duration)
-        TweenService:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Position = UDim2.new(1.5, 0, 0.02, 0)}):Play()
-        task.wait(0.6)
+        TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Position = UDim2.new(-0.5, 0, 0.85, 0)}):Play()
+        task.wait(0.5)
         ScreenGui:Destroy()
     end)
 end
